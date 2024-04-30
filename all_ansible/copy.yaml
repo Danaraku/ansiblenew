@@ -1,0 +1,20 @@
+# vim copy.yaml
+#
+
+---
+  - name: "copy files"
+    hosts: north
+    become: yes
+    tasks:
+    - name: "copy"
+      copy:
+        src: /etc/ansible/hosts
+        dest: /home/ubuntu/
+
+    - name: "capture outpit of ls command"
+      shell: ls /home/ubuntu/
+      register: command_output
+
+    - name: "display capture output"
+      debug:
+        var: command_output.stdout_lines

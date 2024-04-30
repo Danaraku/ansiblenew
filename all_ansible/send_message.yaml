@@ -1,0 +1,12 @@
+# Name of the file send_message.yaml
+
+---
+- name: "send test message"
+  hosts: north
+  ignore_unreachable: true
+  become: yes
+  tasks:
+    - name: "print testing message for troubshooting"
+      debug: 
+        msg: "Install ngnix on {{inventory_hostname}}"
+  

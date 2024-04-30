@@ -1,0 +1,10 @@
+# the firle repo to copy 
+#
+---
+- name: "clone repo to the machine"
+  hosts: localhost
+  become: yes
+  tasks:
+    clone:
+    src:  https://github.com/ashanti88/open_my_mistery_box
+    dest: /home/repo/

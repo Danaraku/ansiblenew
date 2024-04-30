@@ -1,0 +1,49 @@
+---
+- name: "install grafana to RedHat"
+  hosts: 172.31.13.33
+  become: yes
+  tasks:
+    - name: "update cache"
+      yum: 
+        update_cache: yes
+    - name: 
+      yum:
+        name: wget
+        state: latest
+
+    - name: "Import the GPG key"
+      shell: wget -q -O /tmp/gpg.key https://rpm.grafana.com/gpg.key
+
+    - name: "Import Grafana GPG key"
+      shell: rpm --import /tmp/gpg.key
+
+    - name: "Create grafana.repo file"
+      copy:
+        content: |
+          [grafana]
+          name=grafana
+          baseurl=https://rpm.grafana.com
+          repo_gpgcheck=1
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://rpm.grafana.com/gpg.key
+          sslverify=1
+          sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+        dest: /etc/yum.repos.d/grafana.repo
+    - name: "Install Grafana repo"
+      yum:
+        name: grafana
+        state: latest
+
+    - name: "start Grafana repo"
+      service:
+        name: grafana-server
+        state: started
+
+    - name: "Enable Grafana in boot"
+      service:
+        name: grafana-server
+        enabled: true
+
+    - name: "Checking the status"
+      shell: systemctl status grafana-server

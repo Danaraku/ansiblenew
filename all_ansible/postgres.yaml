@@ -1,0 +1,18 @@
+# postgres.yaml
+
+
+---
+  - name: postgresql-playbook
+    hosts: 172.31.13.219
+    become: yes
+    tasks: 
+    - name: install postgresql
+      apt: 
+        name: postgresql
+        state: present
+
+    - name: start and enable PostgreSQL service
+      service:
+        name: postgresql
+        state: started
+        enabled: yes   

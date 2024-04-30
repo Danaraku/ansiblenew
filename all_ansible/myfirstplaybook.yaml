@@ -1,0 +1,11 @@
+# name: myfirstplaybook.yaml
+
+---
+  - name: fisrtplaybook
+    hosts: 12.23.24.24
+    become: yes
+    tasks: 
+    - name: install apache2
+      apt: 
+        name: apache2
+        state: latest 

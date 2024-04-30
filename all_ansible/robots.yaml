@@ -1,0 +1,36 @@
+---
+
+- name: "Get robots.txt and create gpt-bots folder"
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: "Check installation of curl"
+      command: curl --version
+      register: curl_version
+      ignore_errors: true
+
+    - name: "Install curl if not installed"
+      package:
+        name: curl
+        state: present
+      when: curl_version.rc != 0
+
+    - name: "Get robots.txt"
+      command: curl -o /tmp/robots.txt https://www.digitalocean.com/robots.txt
+
+    - name: "Create gpt-bots folder"
+      file:
+        path: /home/ubuntu/gpt-bots
+        state: directory
+
+    - name: "Copy robots.txt to gpt-bots folder"
+      copy:
+        src: /tmp/robots.txt
+        dest: /home/ubuntu/gpt-bots/robots.txt
+
+- name: "Show contents of robots.txt"
+  hosts: localhost
+  tasks:
+    - name: "Show contents of robots.txt"
+      command: cat /home/ubuntu/gpt-bots/robots.txt
+

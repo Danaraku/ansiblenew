@@ -1,0 +1,16 @@
+# ping.yaml
+#
+
+
+---
+  - name: ping-playbook
+    hosts: east
+    become: yes
+    serial: 1
+    tasks: 
+    - name: test reachability
+      ping: 
+
+    - name: update package  manager
+      apt: 
+        update_cache: yes

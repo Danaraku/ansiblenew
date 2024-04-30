@@ -1,0 +1,15 @@
+# name of th efile shell.yaml
+
+---
+- name: "Shell commands"
+  hosts: east
+  become: yes
+  tasks: 
+  - name: "Run Curl command"
+    shell: |
+      curl --location "https://www.gnu.org/gnu/gnu.html"
+
+  - name: "reboot instance"
+    ansible.builtin.reboot:
+      reboot_timeout: 300
+      test_command: uptime

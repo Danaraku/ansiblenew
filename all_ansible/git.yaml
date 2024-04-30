@@ -1,0 +1,15 @@
+# git vim ruby
+#
+
+--- 
+  - name: "install multiple packages using  variables"
+    hosts: north
+    become: yes
+    vars:
+      packages: [git, vim, ruby]
+    tasks:
+     - name: "install vars"
+       apt:
+         name: '{{packages}}' # using '{{packages}}' we are  pointing to the variable that we created earlier
+         state: latest
+       with_items: '{{packages}}'   #to  go over each object  within packages variable (git, vim, ruby)
